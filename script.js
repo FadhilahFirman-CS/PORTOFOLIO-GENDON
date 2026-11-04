@@ -1,6 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const portfolioMusic = document.querySelector('#portfolioMusic');
+  const musicToggle = document.querySelector('#musicToggle');
+  const musicLabel = musicToggle?.querySelector('.music-label');
+
+  const updateMusicButton = (isPlaying) => {
+    if (!musicToggle) return;
+    musicToggle.classList.toggle('is-playing', isPlaying);
+    musicToggle.setAttribute('aria-pressed', String(isPlaying));
+    musicToggle.setAttribute('aria-label', isPlaying ? 'Jeda musik' : 'Putar musik');
+    if (musicLabel) musicLabel.textContent = isPlaying ? 'Pause Music' : 'Play Music';
+  };
+
+  if (portfolioMusic && musicToggle) {
+    musicToggle.addEventListener('click', async () => {
+      if (portfolioMusic.paused) {
+        try {
+          await portfolioMusic.play();
+          updateMusicButton(true);
+        } catch (error) {
+          updateMusicButton(false);
+        }
+      } else {
+        portfolioMusic.pause();
+        updateMusicButton(false);
+      }
+    });
+
+    portfolioMusic.addEventListener('play', () => updateMusicButton(true));
+    portfolioMusic.addEventListener('pause', () => updateMusicButton(false));
+  }
+
+  const startPortfolioMusic = () => {
+    if (portfolioMusic && portfolioMusic.paused) {
+      portfolioMusic.play().catch(() => updateMusicButton(false));
+    }
+  };
+
+  // Browser biasanya memblokir autoplay bersuara. Coba lagi saat interaksi pertama.
+  ['click', 'keydown', 'touchstart'].forEach((eventName) => {
+    window.addEventListener(eventName, startPortfolioMusic, { once: true, passive: true });
+  });
+
   const typingLines = [...document.querySelectorAll('.typing-line')];
   if (typingLines.length) {
     typingLines.forEach((line) => {
@@ -81,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const introStartedAt = performance.now();
     const closeIntro = () => {
       fpsIntro.classList.add('is-hidden');
+      startPortfolioMusic();
       window.setTimeout(() => fpsIntro.remove(), 700);
     };
 
@@ -91,6 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 40);
 
     window.setTimeout(closeIntro, 2500);
+  } else {
+    startPortfolioMusic();
   }
 
   const revealItems = document.querySelectorAll('.reveal');
