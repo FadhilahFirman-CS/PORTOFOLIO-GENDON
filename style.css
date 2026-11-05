@@ -370,6 +370,36 @@ body::before {
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
 }
 
+.ai-specialist {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  max-width: 92%;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  text-align: center;
+  color: #f0fbff;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(0.9rem, 2.3vw, 1.65rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  border: 1px solid rgba(143, 232, 255, 0.4);
+  border-radius: 12px;
+  background: rgba(8, 14, 18, 0.76);
+  box-shadow: 0 0 22px rgba(143, 232, 255, 0.2), inset 0 0 14px rgba(143, 232, 255, 0.06);
+  backdrop-filter: blur(8px);
+  text-shadow: 0 0 14px rgba(143, 232, 255, 0.38), 0 0 34px rgba(143, 232, 255, 0.16);
+  animation: specialist-float 5s ease-in-out infinite;
+}
+
+.ai-specialist span:last-child {
+  color: transparent;
+  background: linear-gradient(90deg, #9dd8ff, #f0fbff, #b9a6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 .glitch {
   margin: 18px 0 14px;
   font-family: "Orbitron", sans-serif;
@@ -468,6 +498,7 @@ body::before {
   position: relative;
   z-index: 3;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -546,7 +577,7 @@ body::before {
   animation: chip-float 4s ease-in-out infinite;
 }
 
-.chip-one { top: 16%; left: 7%; }
+.chip-one { bottom: 10%; left: 7%; }
 .chip-two { right: 7%; bottom: 23%; }
 
 .profile-badge {
@@ -1079,6 +1110,15 @@ body::before {
     transform: translateY(-4px);
     filter: brightness(1.08);
   }
+}
+
+@keyframes specialist-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+  50% { transform: translate3d(10px, -12px, 0) rotate(1deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-specialist { animation: none; }
 }
 
 @keyframes cursor-blink { 50% { opacity: 0; transform: translateX(3px); } }
