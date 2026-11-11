@@ -80,8 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.9,
-          ease: 'power3.out',
+          duration: 1.15,
+          ease: 'power2.out',
+          force3D: true,
           scrollTrigger: {
             trigger: section,
             start: 'top 84%',
@@ -95,9 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
       y: 0,
       scale: 0.97,
       opacity: 0,
-      duration: 0.8,
-      stagger: 0.12,
-      ease: 'power3.out',
+      duration: 1.05,
+      stagger: 0.16,
+      ease: 'power2.out',
+      force3D: true,
       scrollTrigger: {
         trigger: '.project-grid',
         start: 'top 82%',
@@ -108,8 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.to('.project-visual img', {
       y: -8,
       rotationZ: 1.5,
-      duration: 2.4,
+      duration: 3.6,
       ease: 'sine.inOut',
+      force3D: true,
       repeat: -1,
       yoyo: true,
       stagger: 0.2,
