@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.gsap.from('.hero-visual', { autoAlpha: 0, x: 36, scale: 0.96, duration: 1, delay: 0.35, ease: 'power3.out' });
     window.gsap.from('.mini-stat', { autoAlpha: 0, y: 18, duration: 0.55, stagger: 0.12, delay: 0.75, ease: 'power2.out' });
   } else if ('IntersectionObserver' in window && reveals.length) {
+    reveals.forEach((item) => item.classList.add('gsap-ready'));
     const observer = new IntersectionObserver((entries, currentObserver) => entries.forEach((entry) => {
       if (entry.isIntersecting) { entry.target.classList.add('visible'); currentObserver.unobserve(entry.target); }
     }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
@@ -73,11 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (intro) {
     const startedAt = performance.now();
     const timer = window.setInterval(() => {
-      const progress = Math.min(100, Math.round(((performance.now() - startedAt) / 1100) * 100));
+      const progress = Math.min(100, Math.round(((performance.now() - startedAt) / 12000) * 100));
       if (progressText) progressText.textContent = `${String(progress).padStart(2, '0')}%`;
       if (progress >= 100) clearInterval(timer);
     }, 80);
-    window.setTimeout(() => { intro.classList.add('is-hidden'); startMusic(); window.setTimeout(() => intro.remove(), 700); }, reducedMotion ? 500 : 1100);
+    window.setTimeout(() => { intro.classList.add('is-hidden'); startMusic(); window.setTimeout(() => intro.remove(), 700); }, reducedMotion ? 500 : 12000);
   } else startMusic();
 
 });
